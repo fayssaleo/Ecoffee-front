@@ -12,7 +12,8 @@ import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
-
+import Dashbord from "./components/dashbord/Dashbord";
+import CssBaseline from "@material-ui/core/CssBaseline";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +22,7 @@ class App extends Component {
     this.state = {
       showModeratorBoard: false,
       showAdminBoard: false,
-      currentUser: undefined
+      currentUser: undefined,
     };
   }
 
@@ -32,7 +33,7 @@ class App extends Component {
       this.setState({
         currentUser: user,
         showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
-        showAdminBoard: user.roles.includes("ROLE_ADMIN")
+        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
     }
   }
@@ -122,18 +123,111 @@ class App extends Component {
               <Route path="/user" component={BoardUser} />
               <Route path="/mod" component={BoardModerator} />
               <Route path="/admin" component={BoardAdmin} />
+
+              <Route path="/dashbord">
+                <CssBaseline />
+                <Dashbord />
+              </Route>
             </Switch>
           </div>
         </div>
       </Router>
     );
   }
-
-
-
-
-
-
 }
 
 export default App;
+/*
+
+ <List dense className={this.classes.root2}>
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+                  <ListItem dense className={this.classes.lis}>
+                    <ListItemText
+                      align="center"
+                      primary={
+                        <Typography align="center" variant="h6">
+                          Username :
+                        </Typography>
+                      }
+                    />
+                    <ListItemText
+                      align="center"
+                      primary={
+                        this.state.edited ? (
+                          <TextField
+                            id="outlined-basic"
+                            label="Username"
+                            variant="outlined"
+                          />
+                        ) : (
+                          <Typography align="left" variant="h6">
+                            Fayssal Ourezzouq
+                          </Typography>
+                        )
+                      }
+                    />
+                  </ListItem>
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+                  <ListItem dense className={this.classes.lis}>
+                    <ListItemText
+                      align="center"
+                      primary={
+                        <Typography align="center" variant="h6">
+                          Email :
+                        </Typography>
+                      }
+                    />
+                    <ListItemText
+                      align="center"
+                      primary={
+                        this.state.edited ? (
+                          <TextField
+                            id="outlined-basic"
+                            label="Email"
+                            variant="outlined"
+                          />
+                        ) : (
+                          <Typography align="left" variant="h6">
+                            Fayssal.Ourezzouq@gmail.com
+                          </Typography>
+                        )
+                      }
+                    />
+                  </ListItem>
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+                  <ListItem dense className={this.classes.lis}>
+                    <ListItemText
+                      align="center"
+                      primary={
+                        <Typography align="center" variant="h6">
+                          Role :
+                        </Typography>
+                      }
+                    />
+
+                    <FormControl className={this.classes.formControl}>
+                      <InputLabel id="demo-simple-select-label">
+                        Role
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={10}
+                        onChange={this.handleChange}
+                      >
+                        <MenuItem value={10}>Admin</MenuItem>
+                        <MenuItem value={20}>User</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </ListItem>
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+                </List>
+*/
