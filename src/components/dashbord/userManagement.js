@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import Hidden from "@material-ui/core/Hidden";
 import Profile from "./Profile";
+import AddIcon from "@material-ui/icons/Add";
 
 import UserService from "../../services/user.service";
 
@@ -44,6 +45,7 @@ export default function UserManagements() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [users, setUsers] = React.useState([]);
+  const [add, setAdd] = React.useState(false);
   const [user, setUser] = React.useState({
     id: "",
     username: "",
@@ -102,7 +104,11 @@ export default function UserManagements() {
     let usersUp = users.filter((user) => user.id !== u.id);
 
     setUsers([...usersUp]);
-    console.log(usersUp);
+  };
+  const addUser = (u) => {
+    let usersUpdated = users;
+    usersUpdated.push(u);
+    setUsers([...usersUpdated]);
   };
 
   return (
@@ -142,7 +148,23 @@ export default function UserManagements() {
               className={classes.lii && classes.listHeader}
             />
           </Hidden>
-          <ListItemSecondaryAction></ListItemSecondaryAction>
+          <ListItemSecondaryAction>
+            <IconButton
+              aria-label="view-more"
+              onClick={() => {
+                setUser({
+                  id: "",
+                  username: "",
+                  email: "",
+                  role: "",
+                });
+                setAdd(true);
+                setOpen(true);
+              }}
+            >
+              <AddIcon style={{ color: "white" }} />
+            </IconButton>
+          </ListItemSecondaryAction>
         </ListItem>
         {users.map((user) => {
           const labelId = `checkbox-list-secondary-label-${user.id}`;
@@ -197,6 +219,9 @@ export default function UserManagements() {
           setUser={setUser}
           updateUser={updateUser}
           deleteUser={deleteUser}
+          add={add}
+          setAdd={setAdd}
+          addUser={addUser}
         />
       )}
     </>
