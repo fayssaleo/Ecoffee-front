@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -150,6 +149,7 @@ export default class Login extends Component {
       </div>
     );
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import React, { Component } from "react";
@@ -308,3 +308,6 @@ export default class Login extends Component {
 =======
 }
 >>>>>>> dashbordUserManager
+=======
+}
+>>>>>>> 89487a988e3956f1de47a83c070d7b75c63c6e20

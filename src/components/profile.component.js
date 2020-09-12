@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
@@ -282,6 +281,7 @@ class Profile extends Component {
     );
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import React, { Component } from "react";
 import AuthService from "../services/auth.service";
@@ -332,3 +332,6 @@ export default class Profile extends Component {
 }
 export default withStyles(styles, { withTheme: true })(Profile);
 >>>>>>> dashbordUserManager
+=======
+}
+>>>>>>> 89487a988e3956f1de47a83c070d7b75c63c6e20

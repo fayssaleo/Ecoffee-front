@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import axios from "axios";
 
 const API_URL = "http://localhost:8080/";
@@ -60,6 +59,7 @@ class AuthService {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import axios from "axios";
 
@@ -103,3 +103,6 @@ export default new AuthService();
 =======
 export default new AuthService();
 >>>>>>> dashbordUserManager
+=======
+export default new AuthService();
+>>>>>>> 89487a988e3956f1de47a83c070d7b75c63c6e20
