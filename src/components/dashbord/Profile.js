@@ -76,7 +76,6 @@ class Profile extends Component {
   });
   handleClickOpen = () => {
     this.setState({ open: true });
-    console.log(this.state.open);
   };
   handleClose = () => {
     this.setState({ open: false });
@@ -90,7 +89,6 @@ class Profile extends Component {
           [input]: e.target.value,
         },
       });
-      console.log(this.state.CurrentUser);
     };
   };
 
@@ -114,7 +112,7 @@ class Profile extends Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant="h6" className={this.classes.title}>
-                Profile
+                {this.props.add ? "Add New USER : " : "Profile"}
               </Typography>
             </Toolbar>
           </AppBar>
@@ -144,7 +142,7 @@ class Profile extends Component {
                     className={this.classes.lis}
                     primary={
                       <Grid container justify="center">
-                        {this.state.edited ? (
+                        {this.state.edited || this.props.add ? (
                           <TextField
                             id="outlined-basic"
                             variant="outlined"
@@ -173,7 +171,7 @@ class Profile extends Component {
                     className={this.classes.lis}
                     primary={
                       <Grid container justify="center">
-                        {this.state.edited ? (
+                        {this.state.edited || this.props.add ? (
                           <TextField
                             id="outlined-basic"
                             variant="outlined"
@@ -202,7 +200,7 @@ class Profile extends Component {
                     className={this.classes.lis}
                     primary={
                       <Grid container justify="center">
-                        {this.state.edited ? (
+                        {this.state.edited || this.props.add ? (
                           <FormControl style={{ width: "30%" }}>
                             <InputLabel id="demo-simple-select-label">
                               Role
@@ -242,7 +240,7 @@ class Profile extends Component {
             </Grid>
           </Grid>
           <DialogActions>
-            {this.state.edited ? (
+            {this.state.edited || this.props.add ? (
               <>
                 <Button
                   variant="contained"
@@ -253,14 +251,19 @@ class Profile extends Component {
                     this.handleClickOpen();
                   }}
                 >
-                  Confirm
+                  {this.props.add ? "ADD" : "Confirm"}
                 </Button>
                 <Button
                   variant="contained"
                   color="default"
                   onClick={() => {
-                    this.setState({ edited: false });
-                    this.setState({ CurrentUser: this.props.user });
+                    if (this.state.edited) {
+                      this.setState({ edited: false });
+                      this.setState({ CurrentUser: this.props.user });
+                    } else if (this.props.add) {
+                      this.props.setAdd(false);
+                      this.props.handleClose();
+                    }
                   }}
                   startIcon={<CloseIcon />}
                 >
@@ -312,12 +315,18 @@ class Profile extends Component {
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle id="alert-dialog-slide-title">
-            {this.state.edited ? " UPDATE WARNING ! " : "DELETE WARNING !"}
+            {this.state.edited
+              ? " UPDATE WARNING ! "
+              : this.props.add
+              ? "ADD  !"
+              : "DELETE WARNING !"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
               {this.state.edited
                 ? " Are you sure you want to edit this user "
+                : this.props.add
+                ? "Are you sure you want to ADD this user"
                 : "Are you sure you want to delete this user"}
             </DialogContentText>
           </DialogContent>
@@ -331,13 +340,14 @@ class Profile extends Component {
                 if (this.state.edited) {
                   this.props.updateUser(this.state.CurrentUser);
                   this.setState({ edited: false });
-                  this.handleClose();
-                  this.props.handleClose();
+                } else if (this.props.add) {
+                  this.props.addUser(this.state.CurrentUser);
                 } else {
                   this.props.deleteUser(this.state.CurrentUser);
-                  this.handleClose();
-                  this.props.handleClose();
                 }
+
+                this.handleClose();
+                this.props.handleClose();
               }}
             >
               Confirm
@@ -346,7 +356,9 @@ class Profile extends Component {
               variant="contained"
               color="default"
               onClick={() => {
-                this.handleClose();
+                this.setState({ edited: false });
+                this.props.setAdd(false);
+                this.props.handleClose();
               }}
               startIcon={<CloseIcon />}
             >
