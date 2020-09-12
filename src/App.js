@@ -6,7 +6,6 @@ import "./App.css";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
-import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
@@ -14,9 +13,12 @@ import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 import Dashbord from "./components/dashbord/Dashbord";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import UserForm from "./components/register/UserForm";
+
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.logOut = this.logOut.bind(this);
 
     this.state = {
@@ -32,8 +34,8 @@ class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+        showModeratorBoard: user.authorities === "ROLE_USER",
+        showAdminBoard: user.authorities === "ROLE_ADMIN",
       });
     }
   }
@@ -118,7 +120,7 @@ class App extends Component {
             <Switch>
               <Route exact path={["/", "/home"]} component={Home} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
+              <Route exact path="/register" component={UserForm} />
               <Route exact path="/profile" component={Profile} />
               <Route path="/user" component={BoardUser} />
               <Route path="/mod" component={BoardModerator} />
