@@ -22,7 +22,8 @@ import Typography from "@material-ui/core/Typography";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import AuthService from "../services/auth.service";
+import UserService from "../services/user.service";
+import Box from "@material-ui/core/Box";
 
 const styles = (theme) => ({
   root: {
@@ -36,14 +37,17 @@ const styles = (theme) => ({
     maxWidth: "100%",
     backgroundColor: theme.palette.background.paper,
   },
-
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
   avatar: {
     width: theme.spacing(25),
     height: theme.spacing(25),
     margin: theme.spacing(2),
   },
   grid: {
-    height: "56vh",
+    height: "100%",
   },
   lis: {
     felx: 1,
@@ -64,7 +68,6 @@ class Profile extends Component {
       open: false,
     };
     this.classes = this.props.classes;
-    console.log(this.state.CurrentUser);
   }
 
   handleClickOpen = () => {
@@ -85,18 +88,22 @@ class Profile extends Component {
     };
   };
 
+  updateUser = () => {
+    UserService.updateUser(this.state.CurrentUser);
+  };
+
   render() {
     return (
       <>
         <Grid container alignContent="center">
-          <Grid item xs={12} align="center">
+          <Grid item xs={12} md={4} align="center">
             <Avatar
               alt="Remy Sharp"
               src="/static/images/avatar/1.jpg"
               className={this.classes.avatar}
             />
           </Grid>
-          <Grid item xs={false} md={2} />
+
           <Grid item xs={12} md={8} className={this.classes.grid}>
             <br />
 
@@ -166,6 +173,166 @@ class Profile extends Component {
                 <ListItemText
                   className={this.classes.lis}
                   align="center"
+                  primary={<Typography variant="h6">First name :</Typography>}
+                />
+                <ListItemText
+                  className={this.classes.lis}
+                  primary={
+                    <Grid container justify="center">
+                      {this.state.edited ? (
+                        <TextField
+                          id="outlined-basic"
+                          variant="outlined"
+                          value={this.state.CurrentUser.firstname}
+                          onChange={(e) => this.handleChange(e)("firstname")}
+                        />
+                      ) : (
+                        <Typography variant="h6">
+                          {this.state.CurrentUser.firstname}
+                        </Typography>
+                      )}
+                    </Grid>
+                  }
+                />
+              </ListItem>
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <ListItem dense>
+                <ListItemText
+                  className={this.classes.lis}
+                  align="center"
+                  primary={<Typography variant="h6">Last name :</Typography>}
+                />
+                <ListItemText
+                  className={this.classes.lis}
+                  primary={
+                    <Grid container justify="center">
+                      {this.state.edited ? (
+                        <TextField
+                          id="outlined-basic"
+                          variant="outlined"
+                          value={this.state.CurrentUser.lastname}
+                          onChange={(e) => this.handleChange(e)("lastname")}
+                        />
+                      ) : (
+                        <Typography variant="h6">
+                          {this.state.CurrentUser.lastname}
+                        </Typography>
+                      )}
+                    </Grid>
+                  }
+                />
+              </ListItem>
+
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <ListItem dense>
+                <ListItemText
+                  className={this.classes.lis}
+                  align="center"
+                  primary={<Typography variant="h6">Country :</Typography>}
+                />
+                <ListItemText
+                  className={this.classes.lis}
+                  primary={
+                    <Grid container justify="center">
+                      {this.state.edited ? (
+                        <TextField
+                          id="outlined-basic"
+                          variant="outlined"
+                          value={this.state.CurrentUser.country}
+                          onChange={(e) => this.handleChange(e)("country")}
+                        />
+                      ) : (
+                        <Typography variant="h6">
+                          {this.state.CurrentUser.country}
+                        </Typography>
+                      )}
+                    </Grid>
+                  }
+                />
+              </ListItem>
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <ListItem dense>
+                <ListItemText
+                  className={this.classes.lis}
+                  align="center"
+                  primary={<Typography variant="h6">City :</Typography>}
+                />
+                <ListItemText
+                  className={this.classes.lis}
+                  primary={
+                    <Grid container justify="center">
+                      {this.state.edited ? (
+                        <TextField
+                          id="outlined-basic"
+                          variant="outlined"
+                          value={this.state.CurrentUser.city}
+                          onChange={(e) => this.handleChange(e)("city")}
+                        />
+                      ) : (
+                        <Typography variant="h6">
+                          {this.state.CurrentUser.city}
+                        </Typography>
+                      )}
+                    </Grid>
+                  }
+                />
+              </ListItem>
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <ListItem dense>
+                <ListItemText
+                  className={this.classes.lis}
+                  align="center"
+                  primary={<Typography variant="h6">Birthday :</Typography>}
+                />
+                <ListItemText
+                  className={this.classes.lis}
+                  primary={
+                    <Grid container justify="center">
+                      {this.state.edited ? (
+                        <form className={this.classes.container} noValidate>
+                          <TextField
+                            id="date"
+                            label="Birthday"
+                            type="date"
+                            defaultValue={
+                              this.state.CurrentUser.birthday.getYear() +
+                              "-" +
+                              this.state.CurrentUser.birthday.getMounth() +
+                              "-" +
+                              this.state.CurrentUser.birthday.getDay()
+                            }
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            onChange={(e) => this.handleChange(e)("birthday")}
+                            fullWidth
+                          />
+                        </form>
+                      ) : (
+                        <Typography variant="h6">
+                          {this.state.CurrentUser.birthday}
+                        </Typography>
+                      )}
+                    </Grid>
+                  }
+                />
+              </ListItem>
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+
+              <ListItem dense>
+                <ListItemText
+                  className={this.classes.lis}
+                  align="center"
                   primary={<Typography variant="h6">Role :</Typography>}
                 />
                 <ListItemText
@@ -189,12 +356,12 @@ class Profile extends Component {
             </List>
           </Grid>
 
-          <Grid item xs={false} md={2} />
           <Grid item xs={12}>
             <Divider />
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+
+        <Grid item xs={12} alignContent="flex-end">
           {this.state.edited ? (
             <>
               <Button
@@ -213,7 +380,10 @@ class Profile extends Component {
                 color="default"
                 onClick={() => {
                   this.setState({ edited: false });
-                  this.setState({ CurrentUser: AuthService.CurrentUser });
+
+                  this.setState({
+                    CurrentUser: JSON.parse(localStorage.getItem("user")),
+                  });
                 }}
                 startIcon={<CloseIcon />}
               >
@@ -260,6 +430,7 @@ class Profile extends Component {
               className={this.classes.button}
               startIcon={<CreateIcon />}
               onClick={() => {
+                this.updateUser();
                 this.handleClose();
               }}
             >
@@ -269,7 +440,7 @@ class Profile extends Component {
               variant="contained"
               color="default"
               onClick={() => {
-                this.setState({ edited: false });
+                this.handleClose();
               }}
               startIcon={<CloseIcon />}
             >

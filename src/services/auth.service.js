@@ -10,9 +10,7 @@ class AuthService {
         password,
       })
       .then((response) => {
-        console.log("sss");
         localStorage.setItem("user", JSON.stringify(response.data));
-
         return response.data;
       });
   }
@@ -31,16 +29,6 @@ class AuthService {
     city,
     birthday
   ) {
-    console.log({
-      username: username,
-      email: email,
-      password: password,
-      firstname: firstname,
-      lastname: lastname,
-      country: country,
-      city: city,
-      birthday: birthday,
-    });
     return axios.post(API_URL + "register", {
       username: username,
       email: email,

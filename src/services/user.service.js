@@ -24,7 +24,24 @@ class UserService {
   }
 
   updateUser(user) {
-    return axios.post(`https://jsonplaceholder.typicode.com/users`, { user });
+    console.log(user);
+    return axios
+      .post(API_URL + "user/" + user.id, {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        country: user.country,
+        city: user.city,
+        birthday: user.birthday,
+      })
+      .then(() => {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...JSON.parse(localStorage.setItem("user"), user) })
+        );
+      });
   }
 }
 
