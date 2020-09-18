@@ -230,7 +230,7 @@ export default class UserForm extends Component {
       }
     }
 
-    return true;
+    return decision;
   };
 
   handelSubmit = () => {
