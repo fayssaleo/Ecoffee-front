@@ -87,7 +87,17 @@ class Profile extends Component {
       });
     };
   };
+  formatDate = (date) => {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
 
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  };
   updateUser = () => {
     UserService.updateUser(this.state.CurrentUser);
   };
@@ -108,9 +118,6 @@ class Profile extends Component {
             <br />
 
             <List dense className={this.classes.root2}>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
               <ListItem dense>
                 <ListItemText
                   className={this.classes.lis}
@@ -302,13 +309,9 @@ class Profile extends Component {
                             id="date"
                             label="Birthday"
                             type="date"
-                            defaultValue={
-                              this.state.CurrentUser.birthday.getYear() +
-                              "-" +
-                              this.state.CurrentUser.birthday.getMounth() +
-                              "-" +
-                              this.state.CurrentUser.birthday.getDay()
-                            }
+                            defaultValue={this.formatDate(
+                              this.state.CurrentUser.birthday
+                            )}
                             InputLabelProps={{
                               shrink: true,
                             }}
@@ -318,41 +321,13 @@ class Profile extends Component {
                         </form>
                       ) : (
                         <Typography variant="h6">
-                          {this.state.CurrentUser.birthday}
+                          {this.formatDate(this.state.CurrentUser.birthday)}
                         </Typography>
                       )}
                     </Grid>
                   }
                 />
               </ListItem>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-
-              <ListItem dense>
-                <ListItemText
-                  className={this.classes.lis}
-                  align="center"
-                  primary={<Typography variant="h6">Role :</Typography>}
-                />
-                <ListItemText
-                  className={this.classes.lis}
-                  primary={
-                    <Grid container justify="center">
-                      <Typography variant="h6">
-                        {this.state.CurrentUser.role === 1
-                          ? "ADMIN"
-                          : this.state.CurrentUser.role === 2
-                          ? "USER"
-                          : "NONE"}
-                      </Typography>
-                    </Grid>
-                  }
-                />
-              </ListItem>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
             </List>
           </Grid>
 

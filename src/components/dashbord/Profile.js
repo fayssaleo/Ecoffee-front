@@ -48,9 +48,7 @@ const styles = (theme) => ({
     height: theme.spacing(25),
     margin: theme.spacing(2),
   },
-  grid: {
-    height: "56vh",
-  },
+  grid: {},
   lis: {
     felx: 1,
     width: "50%",
@@ -90,6 +88,17 @@ class Profile extends Component {
         },
       });
     };
+  };
+  formatDate = (date) => {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
   };
 
   render() {
@@ -194,6 +203,161 @@ class Profile extends Component {
                   <ListItemText
                     className={this.classes.lis}
                     align="center"
+                    primary={<Typography variant="h6">First name :</Typography>}
+                  />
+                  <ListItemText
+                    className={this.classes.lis}
+                    primary={
+                      <Grid container justify="center">
+                        {this.state.edited || this.props.add ? (
+                          <TextField
+                            id="outlined-basic"
+                            variant="outlined"
+                            value={this.state.CurrentUser.firstname}
+                            onChange={(e) => this.handleChange(e)("firstname")}
+                          />
+                        ) : (
+                          <Typography variant="h6">
+                            {this.state.CurrentUser.firstname}
+                          </Typography>
+                        )}
+                      </Grid>
+                    }
+                  />
+                </ListItem>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <ListItem dense>
+                  <ListItemText
+                    className={this.classes.lis}
+                    align="center"
+                    primary={<Typography variant="h6">Last name :</Typography>}
+                  />
+                  <ListItemText
+                    className={this.classes.lis}
+                    primary={
+                      <Grid container justify="center">
+                        {this.state.edited || this.props.add ? (
+                          <TextField
+                            id="outlined-basic"
+                            variant="outlined"
+                            value={this.state.CurrentUser.lastname}
+                            onChange={(e) => this.handleChange(e)("lastname")}
+                          />
+                        ) : (
+                          <Typography variant="h6">
+                            {this.state.CurrentUser.lastname}
+                          </Typography>
+                        )}
+                      </Grid>
+                    }
+                  />
+                </ListItem>
+
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <ListItem dense>
+                  <ListItemText
+                    className={this.classes.lis}
+                    align="center"
+                    primary={<Typography variant="h6">Country :</Typography>}
+                  />
+                  <ListItemText
+                    className={this.classes.lis}
+                    primary={
+                      <Grid container justify="center">
+                        {this.state.edited || this.props.add ? (
+                          <TextField
+                            id="outlined-basic"
+                            variant="outlined"
+                            value={this.state.CurrentUser.country}
+                            onChange={(e) => this.handleChange(e)("country")}
+                          />
+                        ) : (
+                          <Typography variant="h6">
+                            {this.state.CurrentUser.country}
+                          </Typography>
+                        )}
+                      </Grid>
+                    }
+                  />
+                </ListItem>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <ListItem dense>
+                  <ListItemText
+                    className={this.classes.lis}
+                    align="center"
+                    primary={<Typography variant="h6">City :</Typography>}
+                  />
+                  <ListItemText
+                    className={this.classes.lis}
+                    primary={
+                      <Grid container justify="center">
+                        {this.state.edited || this.props.add ? (
+                          <TextField
+                            id="outlined-basic"
+                            variant="outlined"
+                            value={this.state.CurrentUser.city}
+                            onChange={(e) => this.handleChange(e)("city")}
+                          />
+                        ) : (
+                          <Typography variant="h6">
+                            {this.state.CurrentUser.city}
+                          </Typography>
+                        )}
+                      </Grid>
+                    }
+                  />
+                </ListItem>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <ListItem dense>
+                  <ListItemText
+                    className={this.classes.lis}
+                    align="center"
+                    primary={<Typography variant="h6">Birthday :</Typography>}
+                  />
+                  <ListItemText
+                    className={this.classes.lis}
+                    primary={
+                      <Grid container justify="center">
+                        {this.state.edited || this.props.add ? (
+                          <form className={this.classes.container} noValidate>
+                            <TextField
+                              id="date"
+                              label="Birthday"
+                              type="date"
+                              defaultValue={this.formatDate(
+                                this.state.CurrentUser.birthday
+                              )}
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              onChange={(e) => this.handleChange(e)("birthday")}
+                              fullWidth
+                            />
+                          </form>
+                        ) : (
+                          <Typography variant="h6">
+                            {this.formatDate(this.state.CurrentUser.birthday)}
+                          </Typography>
+                        )}
+                      </Grid>
+                    }
+                  />
+                </ListItem>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <ListItem dense>
+                  <ListItemText
+                    className={this.classes.lis}
+                    align="center"
                     primary={<Typography variant="h6">Role :</Typography>}
                   />
                   <ListItemText
@@ -211,15 +375,15 @@ class Profile extends Component {
                               value={this.state.CurrentUser.role}
                               onChange={(e) => this.handleChange(e)("role")}
                             >
-                              <MenuItem value={1}>Admin</MenuItem>
-                              <MenuItem value={2}>User</MenuItem>
+                              <MenuItem value={"ROLE_ADMIN"}>ADMIN</MenuItem>
+                              <MenuItem value={"ROLE_USER"}>USER</MenuItem>
                             </Select>
                           </FormControl>
                         ) : (
                           <Typography variant="h6">
-                            {this.state.CurrentUser.role === 1
+                            {this.state.CurrentUser.role === "ROLE_ADMIN"
                               ? "ADMIN"
-                              : this.state.CurrentUser.role === 2
+                              : this.state.CurrentUser.role === "ROLE_USER"
                               ? "USER"
                               : "NONE"}
                           </Typography>
@@ -356,9 +520,7 @@ class Profile extends Component {
               variant="contained"
               color="default"
               onClick={() => {
-                this.setState({ edited: false });
-                this.props.setAdd(false);
-                this.props.handleClose();
+                this.handleClose();
               }}
               startIcon={<CloseIcon />}
             >

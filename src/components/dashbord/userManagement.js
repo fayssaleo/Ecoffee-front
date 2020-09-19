@@ -14,6 +14,7 @@ import Profile from "./Profile";
 import AddIcon from "@material-ui/icons/Add";
 
 import UserService from "../../services/user.service";
+import authService from "../../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,20 +47,17 @@ export default function UserManagements() {
   const [open, setOpen] = React.useState(false);
   const [users, setUsers] = React.useState([]);
   const [add, setAdd] = React.useState(false);
-  const [user, setUser] = React.useState({
-    id: "",
-    username: "",
-    email: "",
-    role: "",
-  });
-  const getRole = (id) => {
-    switch (id) {
-      case 1:
+  const [user, setUser] = React.useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+  const getRole = (role) => {
+    switch (role) {
+      case "ROLE_ADMIN":
         return "ADMIN";
-      case 2:
+      case "ROLE_USER":
         return "USER";
       default:
-        return "no-role";
+        return "NO_ROLE";
     }
   };
 
@@ -70,11 +68,17 @@ export default function UserManagements() {
           id: user.id,
           username: user.username,
           email: user.email,
-          role: 2,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          country: user.country,
+          city: user.city,
+          birthday: user.birthday,
+          role: user.role,
         }))
       )
       .then((res) => {
         setUsers(res);
+        console.log(res);
       });
   }, []);
   const handleClickOpen = (id) => {
@@ -84,6 +88,11 @@ export default function UserManagements() {
       id: u.id,
       username: u.username,
       email: u.email,
+      firstname: u.firstname,
+      lastname: u.lastname,
+      country: u.country,
+      city: u.city,
+      birthday: u.birthday,
       role: u.role,
     });
 
@@ -94,21 +103,27 @@ export default function UserManagements() {
   };
 
   const updateUser = (u) => {
-    let usersUpdated = users;
-    let index = users.findIndex((x) => u.id === x.id);
-    usersUpdated[index] = u;
-    setUsers([...usersUpdated]);
+    UserService.updateUser2(u).then(() => {
+      let usersUpdated = users;
+      let index = users.findIndex((x) => u.id === x.id);
+      usersUpdated[index] = u;
+      setUsers([...usersUpdated]);
+    });
   };
 
   const deleteUser = (u) => {
-    let usersUp = users.filter((user) => user.id !== u.id);
+    UserService.deleteUser(u.id).then(() => {
+      let usersUp = users.filter((user) => user.id !== u.id);
 
-    setUsers([...usersUp]);
+      setUsers([...usersUp]);
+    });
   };
   const addUser = (u) => {
-    let usersUpdated = users;
-    usersUpdated.push(u);
-    setUsers([...usersUpdated]);
+    UserService.addUser(u).then(() => {
+      let usersUpdated = users;
+      usersUpdated.push(u);
+      setUsers([...usersUpdated]);
+    });
   };
 
   return (
