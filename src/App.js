@@ -14,6 +14,7 @@ import BoardAdmin from "./components/board-admin.component";
 import Dashbord from "./components/dashbord/Dashbord";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import UserForm from "./components/register/UserForm";
+import Room from "./components/assets/Room";
 
 class App extends Component {
   constructor(props) {
@@ -125,6 +126,7 @@ class App extends Component {
               <Route path="/user" component={BoardUser} />
               <Route path="/mod" component={BoardModerator} />
               <Route path="/admin" component={BoardAdmin} />
+              <Route path="/room" component={Room} />
 
               <Route path="/dashbord">
                 <CssBaseline />
